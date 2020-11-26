@@ -1,6 +1,12 @@
 import logo from './logo.svg';
 import './App.css';
 
+import { Form, Field } from 'react-final-form'
+
+import Select from './components/form/select';
+
+const data = {};
+
 function App() {
   return (
     <div className="App">
@@ -18,6 +24,19 @@ function App() {
           Learn React
         </a>
       </header>
+      <Form
+          onSubmit={this.onSubmit}
+          render={({handleSubmit}) => (
+              <form onSubmit={handleSubmit} onChange={(e) => this.onChange(e)}>
+                  <div className="row justify-content-center">
+                      <div className="col-md-8">
+                      <Field 
+                      component={Select} 
+                      name={`categoria`} 
+                      data={data}
+                      label={`Categoria:`}
+                    />
+
     </div>
   );
 }
