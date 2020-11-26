@@ -4,39 +4,73 @@ import './App.css';
 import { Form, Field } from 'react-final-form'
 
 import Select from './components/form/select';
+import Input from './components/form/input';
 
 const data = {};
+
+const onSubmit = values => {
+  values.status = 1
+}
+
+let dataSetor = [{ id: 1, name: "teste" }]
+
 
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
       <Form
-          onSubmit={this.onSubmit}
-          render={({handleSubmit}) => (
-              <form onSubmit={handleSubmit} onChange={(e) => this.onChange(e)}>
-                  <div className="row justify-content-center">
-                      <div className="col-md-8">
-                      <Field 
-                      component={Select} 
-                      name={`categoria`} 
-                      data={data}
-                      label={`Categoria:`}
-                    />
+        onSubmit={onSubmit}
+        //validate={validate}
+        render={({ handleSubmit }) => (
+          <form onSubmit={handleSubmit}>
+            <h2>Simple Default Input</h2>
+            <div>
+              <label>First Name</label>
+              <Field name="firstName"
+                component={Input}
+                placeholder="Primeiro nome"
+              />
+            </div>
 
+            <h2>An Arbitrary Reusable Input Component</h2>
+            <div>
+              <label>Interests</label>
+              <Field
+                name="interests"
+                component={Select}
+                name={`setor`}
+                data={dataSetor}
+                label={`Setor:`}
+              />
+            </div>
+
+            <h2>Render Function</h2>
+            <Field
+              name="bio"
+              render={({ input, meta }) => (
+                <div>
+                  <label>Bio</label>
+                  <textarea {...input} />
+                  {meta.touched && meta.error && <span>{meta.error}</span>}
+                </div>
+              )}
+            />
+
+            <h2>Render Function as Children</h2>
+            <Field name="phone">
+              {({ input, meta }) => (
+                <div>
+                  <label>Phone</label>
+                  <input type="text" {...input} placeholder="Phone" />
+                  {meta.touched && meta.error && <span>{meta.error}</span>}
+                </div>
+              )}
+            </Field>
+
+            <button type="submit">Submit</button>
+          </form>
+        )}
+      />
     </div>
   );
 }
